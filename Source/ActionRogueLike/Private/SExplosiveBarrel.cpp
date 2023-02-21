@@ -43,6 +43,9 @@ void ASExplosiveBarrel::OnActorHit(UPrimitiveComponent* HitComponent, AActor* Ot
 
 	// Logging example to make sure we reached the event
 	UE_LOG(LogTemp, Log, TEXT("OnActorHit reached (ExplosiveBarrel)"));
+
+
+	UE_LOG(LogTemp, Warning, TEXT("Other Actor : %s"), *GetNameSafe(OtherActor));
 }
 
 
