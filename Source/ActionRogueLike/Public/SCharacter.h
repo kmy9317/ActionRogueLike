@@ -10,7 +10,7 @@ class UCameraComponent;
 class USpringArmComponent;
 class USInteractionComponent;
 class UAnimMontage;
-// class USAttributeComponent;
+class USAttributeComponent;
 
 
 UCLASS()
@@ -53,8 +53,8 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	USInteractionComponent* InteractionComp;
 
-	// UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-	// USAttributeComponent* AttributeComp;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	USAttributeComponent* AttributeComp;
 
 	void MoveForward(float Value);
 
