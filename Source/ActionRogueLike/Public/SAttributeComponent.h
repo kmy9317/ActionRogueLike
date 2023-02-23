@@ -17,17 +17,22 @@ public:
 	// Sets default values for this component's properties
 	USAttributeComponent();
 
-	UFUNCTION(BlueprintCallable, Category = "Attribute")
-	bool ApplyHealthChange(float Delta);
+
 
 protected:
-
-	
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Attribute")
 	float Health;
 
 public:
+
+	UFUNCTION(BlueprintCallable)
+	bool IsAlive() const;
+
 	UPROPERTY(BlueprintAssignable)
 	FOnHealthChanged OnHealthChanged;
+
+	UFUNCTION(BlueprintCallable, Category = "Attribute")
+	bool ApplyHealthChange(float Delta);
+
 };
