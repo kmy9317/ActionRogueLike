@@ -22,10 +22,12 @@ public:
 
 protected:
 
-	UPROPERTY(BlueprintAssignable)
-	FOnHealthChanged OnHealthChanged;
+	
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Attribute")
 	float Health;
 
+public:
+	UPROPERTY(BlueprintAssignable)
+	FOnHealthChanged OnHealthChanged;
 };
