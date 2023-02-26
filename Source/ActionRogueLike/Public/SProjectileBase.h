@@ -22,6 +22,8 @@ public:
 	ASProjectileBase();
 
 protected:
+	virtual void PostInitializeComponents() override;
+
 	// Sets default values for this actor's properties
 
 	UPROPERTY(EditDefaultsOnly, Category = "Effects|Shake")
@@ -59,5 +61,4 @@ protected:
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
 	void Explode();
 
-	virtual void PostInitializeComponents() override;
 };
