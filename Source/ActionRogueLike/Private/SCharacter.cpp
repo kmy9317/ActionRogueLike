@@ -39,7 +39,7 @@ void ASCharacter::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 
-	AttributeComp->OnHealthChanged.AddDynamic(this, &ASCharacter::OnHealthChanged);
+	AttributeComp->OnHealthChanged.AddUniqueDynamic(this, &ASCharacter::OnHealthChanged);
 }
 
 // Called to bind functionality to input

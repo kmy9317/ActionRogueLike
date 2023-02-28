@@ -27,5 +27,5 @@ protected:
 
 public:
 
-	//USBTTask_RangedAttack();
+	USBTTask_RangedAttack();
 };

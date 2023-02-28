@@ -33,7 +33,7 @@ void ASExplosiveBarrel::PostInitializeComponents()
 	// Don't forget to call parent function
 	Super::PostInitializeComponents();
 
-	MeshComp->OnComponentHit.AddDynamic(this, &ASExplosiveBarrel::OnActorHit);
+	MeshComp->OnComponentHit.AddUniqueDynamic(this, &ASExplosiveBarrel::OnActorHit);
 }
 
 

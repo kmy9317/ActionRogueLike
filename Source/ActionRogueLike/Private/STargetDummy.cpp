@@ -20,7 +20,7 @@ void ASTargetDummy::PostInitializeComponents()
 	Super::PostInitializeComponents();
 
 	// Trigger when health is changed (damage/healing)
-	AttributeComp->OnHealthChanged.AddDynamic(this, &ASTargetDummy::OnHealthChanged);
+	AttributeComp->OnHealthChanged.AddUniqueDynamic(this, &ASTargetDummy::OnHealthChanged);
 }
 
 
