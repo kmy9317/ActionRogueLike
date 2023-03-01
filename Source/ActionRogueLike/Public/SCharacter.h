@@ -24,6 +24,10 @@ public:
 	ASCharacter();
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	UFUNCTION(Exec)
+	void HealSelf(float Amount = 100.f);
+
 protected:
 
 	/* VisibleAnywhere = read-only, still useful to view in-editor and enforce a convention. */
