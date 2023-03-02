@@ -24,6 +24,8 @@ public:
 
 	virtual void StartPlay() override;
 
+	virtual void OnActorKilled(AActor* VictimActor, AActor* Killer);
+
 	UFUNCTION(Exec)
 	void KillAll();
 
@@ -42,10 +44,15 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "AI")
 	float SpawnTimerInterval;
 
+	UPROPERTY(EditDefaultsOnly, Category = "AI")
+	float RespawnDelay;
+
 	UFUNCTION()
 	void SpawnBotTimerElapsed();
 
 	UFUNCTION()
 	void OnQueryCompleted(UEnvQueryInstanceBlueprintWrapper* QueryInstance, EEnvQueryStatus::Type QueryStatus);
 
+	UFUNCTION()
+	void RespawnPlayerElapsed(AController* Controller);
 };
