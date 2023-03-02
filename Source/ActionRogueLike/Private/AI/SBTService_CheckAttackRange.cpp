@@ -5,6 +5,12 @@
 #include "BehaviorTree/BlackboardComponent.h"
 #include "AIController.h"
 
+USBTService_CheckAttackRange::USBTService_CheckAttackRange()
+{
+	MaxAttackRange = 2000.f;
+}
+
+
 void USBTService_CheckAttackRange::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
 {
 	Super::TickNode(OwnerComp, NodeMemory, DeltaSeconds);
@@ -18,25 +24,22 @@ void USBTService_CheckAttackRange::TickNode(UBehaviorTreeComponent& OwnerComp, u
 		if (TargetActor)
 		{
 			AAIController* MyController = OwnerComp.GetAIOwner();
-			if (ensure(MyController))
+			
+			APawn* AIPawn = MyController->GetPawn();
+			if (ensure(AIPawn))
 			{
-				APawn* AIPawn = MyController->GetPawn();
-				if (ensure(AIPawn))
+				float Distance = FVector::Distance(TargetActor->GetActorLocation(), AIPawn->GetActorLocation());
+
+				bool bWithinRange = Distance < 2000.f;
+
+				bool bHasLOS = false;
+				if (bWithinRange)
 				{
-					float Distance = FVector::Distance(TargetActor->GetActorLocation(), AIPawn->GetActorLocation());
-
-					bool bWithinRange = Distance < 2000.f;
-
-					bool bHasLOS = false;
-					if (bWithinRange)
-					{
-						bHasLOS = MyController->LineOfSightTo(TargetActor);
-					}
-
-					BlackboardComp->SetValueAsBool(AttackRangeKey.SelectedKeyName, (bWithinRange && bHasLOS));
-
+					bHasLOS = MyController->LineOfSightTo(TargetActor);
 				}
-			}
+
+				BlackboardComp->SetValueAsBool(AttackRangeKey.SelectedKeyName, (bWithinRange && bHasLOS));
+			}		
 		}
 	}
 }
