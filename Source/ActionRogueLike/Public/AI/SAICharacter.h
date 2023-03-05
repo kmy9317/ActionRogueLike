@@ -10,6 +10,7 @@ class UPawnSensingComponent;
 class USAttributeComponent;
 class UUserWidget;
 class USWorldUserWidget;
+class USActionComponent;
 
 UCLASS()
 class ACTIONROGUELIKE_API ASAICharacter : public ACharacter
@@ -38,6 +39,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, Category = "Component")
 	USAttributeComponent* AttributeComp;
+
+	UPROPERTY(VisibleAnywhere, Category = "Component")
+	USActionComponent* ActionComp;
 
 	UFUNCTION()
 	void OnHealthChanged(AActor* InstigatorActor, USAttributeComponent* OwningComp, float NewHealth, float Delta);

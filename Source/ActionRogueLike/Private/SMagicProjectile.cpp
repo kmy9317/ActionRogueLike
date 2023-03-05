@@ -5,7 +5,7 @@
 #include "Components/SphereComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Particles/ParticleSystemComponent.h"
-#include "SAttributeComponent.h"
+#include "SActionComponent.h"
 #include "SGameplayFunctionLibrary.h"
 
 // Sets default values
@@ -29,15 +29,16 @@ void ASMagicProjectile::OnActorOverlap(UPrimitiveComponent* OverlappedComponent,
 {
 	if (OtherActor && OtherActor != GetInstigator())
 	{
-		/*USAttributeComponent* AttributeComp = Cast<USAttributeComponent>(OtherActor->GetComponentByClass(USAttributeComponent::StaticClass()));
-		if (AttributeComp)
+		// static FGameplayTag Tag = FGameplayTag::RequestGameplayTag("Status.Parrying");
+		
+		USActionComponent* ActionComp = Cast<USActionComponent>(OtherActor->GetComponentByClass(USActionComponent::StaticClass()));
+		if (ActionComp && ActionComp->ActiveGameplayTags.HasTag(ParryTag))
 		{
-			AttributeComp->ApplyHealthChange(GetInstigator(), -DamageAmount);
-			Explode();
+			MoveComp->Velocity = -MoveComp->Velocity;
 
-			Destroy();
+			SetInstigator(Cast<APawn>(OtherActor));
+			return;
 		}
-		*/
 
 		if (USGameplayFunctionLibrary::ApplyDirectionalDamage(GetInstigator(), OtherActor, DamageAmount, SweepResult))
 		{
