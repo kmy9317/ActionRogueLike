@@ -6,7 +6,16 @@
 #include "Components/ActorComponent.h"
 #include "SAttributeComponent.generated.h"
 
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FOnHealthChanged, AActor*, InstigatorActor, USAttributeComponent*, OwningComp, float, NewHealth, float, Delta);
+
+//DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FOnRageChanged, AActor*, InstigatorActor, USAttributeComponent*, OwningComp, float, NewRage, float, Delta);
+
+// Alternative: Share the same signature with generic names
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FOnAttributeChanged, AActor*, InstigatorActor, USAttributeComponent*, OwningComp, float, NewValue, float, Delta);
+
+
+
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class ACTIONROGUELIKE_API USAttributeComponent : public UActorComponent
@@ -25,36 +34,66 @@ public:
 
 protected:
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Replicated, Category = "Attribute")
+	// EditAnywhere - edit in BP editor and per-instance in level.
+	// VisibleAnywhere - 'read-only' in editor and level. (Use for Components)
+	// EditDefaultsOnly - hide variable per-instance, edit in BP editor only
+	// VisibleDefaultsOnly - 'read-only' access for variable, only in BP editor (uncommon)
+	// EditInstanceOnly - allow only editing of instance (eg. when placed in level)
+	// --
+	// BlueprintReadOnly - read-only in the Blueprint scripting (does not affect 'details'-panel)
+	// BlueprintReadWrite - read-write access in Blueprints
+	// --
+	// Category = "" - display only for detail panels and blueprint context menu.
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Replicated, Category = "Attributes")
 	float Health;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Replicated, Category = "Attributes")
 	float HealthMax;
 
-	UFUNCTION(NetMulticast, Reliable)
+	/* Resource used to power certain Actions */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Attributes")
+	float Rage;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Attributes")
+	float RageMax;
+
+	//UPROPERTY(ReplicatedUsing="")
+	//bool bIsAlive;
+
+	UFUNCTION(NetMulticast, Reliable) // @FIXME: mark as unreliable once we moved the 'state' our of scharacter
 	void MulticastHealthChanged(AActor* InstigatorActor, float NewHealth, float Delta);
 
-public:
+public:	
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category = "Attributes")
 	bool Kill(AActor* InstigatorActor);
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category = "Attributes")
 	bool IsAlive() const;
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category = "Attributes")
 	bool IsFullHealth() const;
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category = "Attributes")
 	float GetHealth() const;
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category = "Attributes")
 	float GetHealthMax() const;
 
-	UPROPERTY(BlueprintAssignable)
+	UPROPERTY(BlueprintAssignable, Category = "Attributes")
 	FOnHealthChanged OnHealthChanged;
 
-	UFUNCTION(BlueprintCallable, Category = "Attribute")
+	UPROPERTY(BlueprintAssignable, Category = "Attributes")
+	FOnAttributeChanged OnRageChanged;
+
+	UFUNCTION(BlueprintCallable, Category = "Attributes")
 	bool ApplyHealthChange(AActor* InstigatorActor, float Delta);
+
+	UFUNCTION(BlueprintCallable)
+	float GetRage() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Attributes")
+	bool ApplyRage(AActor* InstigatorActor, float Delta);
 
 };
