@@ -17,10 +17,10 @@ class ACTIONROGUELIKE_API USActionEffect_Thorns : public USActionEffect
 protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Thorns")
-		float ReflectFraction;
+	float ReflectFraction;
 
 	UFUNCTION()
-		void OnHealthChanged(AActor* InstigatorActor, USAttributeComponent* OwningComp, float NewHealth, float Delta);
+	void OnHealthChanged(AActor* InstigatorActor, USAttributeComponent* OwningComp, float NewHealth, float Delta);
 
 public:
 
