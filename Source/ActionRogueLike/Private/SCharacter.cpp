@@ -125,7 +125,6 @@ void ASCharacter::PrimaryInteract()
 {
 	if (InteractionComp)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("InteractionComp"));
 		InteractionComp->PrimaryInteract();
 	}
 }

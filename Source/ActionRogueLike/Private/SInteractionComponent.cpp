@@ -126,7 +126,6 @@ void USInteractionComponent::ServerInteract_Implementation(AActor* InFocus)
 	}
 
 	APawn* MyPawn = Cast<APawn>(GetOwner());
-
 	ISGameplayInterface::Execute_Interact(InFocus, MyPawn);
 }
 
