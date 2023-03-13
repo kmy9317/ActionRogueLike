@@ -10,6 +10,7 @@
 class UEnvQuery;
 class UEnvQueryInstanceBlueprintWrapper;
 class UCurveFloat;
+class USSaveGame;
 
 /**
  * 
@@ -19,17 +20,13 @@ class ACTIONROGUELIKE_API ASGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
 
-public:
-	ASGameModeBase();
-
-	virtual void StartPlay() override;
-
-	virtual void OnActorKilled(AActor* VictimActor, AActor* Killer);
-
-	UFUNCTION(Exec)
-	void KillAll();
-
 protected:
+
+	FString SlotName;
+
+	UPROPERTY()
+	USSaveGame* CurrentSaveGame;
+
 	UPROPERTY(EditDefaultsOnly, Category = "AI")
 	TSubclassOf<AActor> MinionClass;
 
@@ -75,4 +72,23 @@ protected:
 
 	UFUNCTION()
 	void RespawnPlayerElapsed(AController* Controller);
+
+public:
+	ASGameModeBase();
+
+	virtual void InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage);
+
+	virtual void StartPlay() override;
+
+	virtual void OnActorKilled(AActor* VictimActor, AActor* Killer);
+
+	void HandleStartingNewPlayer_Implementation(APlayerController* NewPlayer) override;
+
+	UFUNCTION(Exec)
+	void KillAll();
+
+	UFUNCTION(BlueprintCallable, Category = "SaveGame")
+	void WriteSaveGame();
+
+	void LoadSaveGame();
 };

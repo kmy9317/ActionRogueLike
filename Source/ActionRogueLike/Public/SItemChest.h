@@ -19,7 +19,7 @@ public:
 
 protected:
 
-	UPROPERTY(ReplicatedUsing = "OnRep_LidOpened", BlueprintReadOnly)
+	UPROPERTY(ReplicatedUsing = "OnRep_LidOpened", BlueprintReadOnly, SaveGame)
 	bool bLidOpened;
 
 	UFUNCTION()
@@ -33,6 +33,8 @@ protected:
 
 public:	
 	virtual void Interact_Implementation(APawn* InstigatorPawn) override;
+
+	void OnActorLoaded_Implementation();
 
 	ASItemChest();
 };
