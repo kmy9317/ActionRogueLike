@@ -52,10 +52,10 @@ protected:
 	float HealthMax;
 
 	/* Resource used to power certain Actions */
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Attributes")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Replicated, Category = "Attributes")
 	float Rage;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Attributes")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Replicated, Category = "Attributes")
 	float RageMax;
 
 	//UPROPERTY(ReplicatedUsing="")
@@ -63,6 +63,9 @@ protected:
 
 	UFUNCTION(NetMulticast, Reliable) // @FIXME: mark as unreliable once we moved the 'state' our of scharacter
 	void MulticastHealthChanged(AActor* InstigatorActor, float NewHealth, float Delta);
+
+	UFUNCTION(NetMulticast, Unreliable) // Used for cosmetic changes only
+	void MulticastRageChanged(AActor* InstigatorActor, float NewRage, float Delta);
 
 public:	
 
